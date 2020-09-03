@@ -1,8 +1,42 @@
-import express from "express";
+import express from 'express';
+import mongoose from 'mongoose';
+import config from './config';
+import hpp from 'hpp';
+import helmet from 'helmet';
+import cors from 'cors';
+import morgan from 'morgan';
+
+// Routes
+import postRoutes from './routes/api/post';
+import userRoutes from './routes/api/user';
+import authRoutes from './routes/api/auth';
 
 const app = express();
+const { MONGO_URI } = config;
 
-app.get('/')
+app.use(hpp()); //
+app.use(helmet()); // 서버보안 보완
+
+app.use(cors({ origin: true, credentials: true })); // 다른 포트요청 허용
+app.use(morgan('dev')); // 개발시 log 볼수 있음
+
+app.use(express.json()); // json 형태로 해석
+
+mongoose
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    //useFindAndModify: false,
+  })
+  .then(() => console.log('MongoDB connecting Success!!'))
+  .catch((e) => console.log(e));
+
+// Use routes (책갈피 역할)
+app.get('/'); // Home !
+app.use('/api/post', postRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
 export default app;
 
