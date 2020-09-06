@@ -6,6 +6,47 @@ import auth from '../../middleware/auth';
 
 const router = express.Router();
 
+import multer from 'multer';
+import multerS3 from 'multer-s3';
+import path from 'path';
+import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
+dotenv.config();
+//import { isNullOrUndefined } from "util";
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_PRIVATE_KEY,
+});
+
+const uploadS3 = multer({
+  storage: multerS3({
+    s3,
+    bucket: 'kilimproject2009/upload', // <--"sideproject2020/upload",
+    region: 'ap-northeast-2', // 극동아시아 2
+    key(req, file, cb) {
+      const ext = path.extname(file.originalname); // 확장자
+      const basename = path.basename(file.originalname, ext);
+      cb(null, basename + new Date().valueOf() + ext);
+    },
+  }),
+  limits: { fileSize: 100 * 1024 * 1024 }, // 사이즈
+});
+
+// @route     POST api/post/image
+// @desc      Create a Post
+// @access    Private
+
+router.post('/image', uploadS3.array('upload', 5), async (req, res, next) => {
+  try {
+    console.log(req.files.map((v) => v.location)); // 확인 주소
+    res.json({ uploaded: true, url: req.files.map((v) => v.location) });
+  } catch (e) {
+    console.error(e);
+    res.json({ uploaded: false, url: null });
+  }
+}); // 게시판에 파일을 보내고 이미지가 보여지는 라우터 --> 제출하기 예정
+
 // --- api/post
 
 // db 자료 읽기
@@ -63,7 +104,7 @@ const s3 = new AWS.S3({
 const uploadS3 = multer({
   storage: multerS3({
     s3,
-    bucket: "sideproject2020/upload",
+    bucket: "kilimproject2009/upload",  // <--"sideproject2020/upload",
     region: "ap-northeast-2",
     key(req, file, cb) {
       const ext = path.extname(file.originalname);
