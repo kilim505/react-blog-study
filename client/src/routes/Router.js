@@ -5,11 +5,11 @@ import AppNavbar from '../components/AppNavbar';
 import { Container } from 'reactstrap';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import CategoryResult from './normalRoute/CategoryResult';
 import PostCardList from './normalRoute/PostCardList';
 import PostDetail from './normalRoute/PostDetail';
-import PostEdit from './normalRoute/PostEdit';
 import PostWrite from './normalRoute/PostWrite';
+import PostEdit from './normalRoute/PostEdit';
+import CategoryResult from './normalRoute/CategoryResult';
 import Profile from './normalRoute/Profile';
 import Search from './normalRoute/Search';
 
@@ -28,17 +28,18 @@ const MyRouter = () => (
         <Route path="/post" exact component={PostWrite} />
         <Route path="/post/:id" exact component={PostDetail} />
         <EditProtectedRoute path="/post/:id/edit" exact component={PostEdit} />
+        <ProfileProtectedRoute
+          path="/user/:userName/profile"
+          exact
+          component={Profile}
+        />
         <Route
           path="/post/category/:categoryName"
           exact
           component={CategoryResult}
         />
         <Route path="/search/:searchTerm" exact component={Search} />
-        <ProfileProtectedRoute
-          path="/user/:userName/profile"
-          exact
-          component={Profile}
-        />
+
         <Redirect from="*" to="/" />
       </Switch>
     </Container>

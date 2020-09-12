@@ -1,17 +1,10 @@
-import React from 'react';
-
-const CategoryResult = () => {
-  return <h1>CategoryResult</h1>;
-};
-
-export default CategoryResult;
-/*
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { CATEGORY_FIND_REQUEST } from "../../redux/types";
-import PostCardOne from "../../components/post/PostCardOne";
-import { Row } from "reactstrap";
+//
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { CATEGORY_FIND_REQUEST } from '../../redux/types';
+import PostCardOne from '../../components/post/PostCardOne';
+import { Row } from 'reactstrap';
 
 const CategoryResult = () => {
   const dispatch = useDispatch();
@@ -36,7 +29,6 @@ const CategoryResult = () => {
       </Row>
     </div>
   );
-};
+}; // end of const CategoryResult = () => {
 
 export default CategoryResult;
-*/

@@ -1,9 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Badge } from "reactstrap";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Badge } from 'reactstrap';
 
 const Categroy = ({ posts }) => {
-  console.log(posts);
+  console.log(posts); // 넘어 오는 것 확인
+  return <h1> Category </h1>;
+
+  /*
   return (
     <>
       {Array.isArray(posts)
@@ -24,6 +27,7 @@ const Categroy = ({ posts }) => {
         : ""}
     </>
   );
-};
+ */
+}; // end of const Categroy = ({ posts }) => {
 
 export default Categroy;

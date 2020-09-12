@@ -1,39 +1,39 @@
 import {
   POSTS_LOADING_REQUEST,
   POSTS_LOADING_SUCCESS,
-  POSTS_LOADING_FAILURE,
+  POSTS_LOADING_FAILURE, //
   POSTS_WRITE_REQUEST,
   POSTS_WRITE_SUCCESS,
-  POSTS_WRITE_FAILURE,
+  POSTS_WRITE_FAILURE, //
   POST_DETAIL_LOADING_FAILURE,
   POST_DETAIL_LOADING_SUCCESS,
-  POST_DETAIL_LOADING_REQUEST,
+  POST_DETAIL_LOADING_REQUEST, //
   POST_EDIT_LOADING_REQUEST,
   POST_EDIT_LOADING_SUCCESS,
-  POST_EDIT_LOADING_FAILURE,
+  POST_EDIT_LOADING_FAILURE, //
   POST_EDIT_UPLOADING_REQUEST,
   POST_EDIT_UPLOADING_SUCCESS,
-  POST_EDIT_UPLOADING_FAILURE,
+  POST_EDIT_UPLOADING_FAILURE, //
   CATEGORY_FIND_REQUEST,
   CATEGORY_FIND_SUCCESS,
-  CATEGORY_FIND_FAILURE,
+  CATEGORY_FIND_FAILURE, //
   SEARCH_REQUEST,
   SEARCH_SUCCESS,
   SEARCH_FAILURE,
-} from "../types";
+} from '../types';
 
 const initialState = {
   isAuthenticated: null,
   posts: [],
-  postDetail: "",
-  postCount: "",
+  postDetail: '',
+  postCount: '',
   loading: false,
-  error: "",
-  creatorId: "",
-  categoryFindResult: "",
-  title: "",
-  searchBy: "",
-  searchResult: "",
+  error: '',
+  creatorId: '',
+  categoryFindResult: '',
+  title: '',
+  searchBy: '',
+  searchResult: '',
 };
 
 export default function (state = initialState, action) {
@@ -41,15 +41,18 @@ export default function (state = initialState, action) {
     case POSTS_LOADING_REQUEST:
       return {
         ...state,
-
+        //posts:[],        // + scroll
         loading: true,
       };
-    case POSTS_LOADING_SUCCESS:
+    case POSTS_LOADING_SUCCESS: // 카테고리 추가
       return {
         ...state,
-        posts: [...state.posts, ...action.payload.postFindResult],
+        posts: [
+          ...state.posts, //...action.payload], (x)
+          ...action.payload.postFindResult,
+        ],
         categoryFindResult: action.payload.categoryFindResult,
-        postCount: action.payload.postCount,
+        postCount: action.payload.postCount, // + scroll
         loading: false,
       };
     case POSTS_LOADING_FAILURE:
@@ -57,6 +60,7 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
       };
+
     case POSTS_WRITE_REQUEST:
       return {
         ...state,
@@ -74,6 +78,7 @@ export default function (state = initialState, action) {
         error: action.payload,
         loading: false,
       };
+
     case POST_DETAIL_LOADING_REQUEST:
       return {
         ...state,
@@ -94,6 +99,7 @@ export default function (state = initialState, action) {
         error: action.payload,
         loading: false,
       };
+
     case POST_EDIT_LOADING_REQUEST:
       return {
         ...state,
@@ -113,6 +119,7 @@ export default function (state = initialState, action) {
         error: action.payload,
         loading: false,
       };
+
     case POST_EDIT_UPLOADING_REQUEST:
       return {
         ...state,
@@ -132,6 +139,7 @@ export default function (state = initialState, action) {
         error: action.payload,
         loading: false,
       };
+
     case CATEGORY_FIND_REQUEST:
       return {
         ...state,
@@ -150,6 +158,7 @@ export default function (state = initialState, action) {
         categoryFindResult: action.payload,
         loading: false,
       };
+
     case SEARCH_REQUEST:
       return {
         ...state,
@@ -170,6 +179,7 @@ export default function (state = initialState, action) {
         searchResult: action.payload,
         loading: false,
       };
+
     default:
       return state;
   }

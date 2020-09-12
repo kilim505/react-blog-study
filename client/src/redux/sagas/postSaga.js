@@ -1,6 +1,6 @@
-import axios from "axios";
-import { put, call, takeEvery, all, fork } from "redux-saga/effects";
-import { push } from "connected-react-router";
+import axios from 'axios';
+import { put, call, takeEvery, all, fork } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 import {
   POSTS_LOADING_FAILURE,
   POSTS_LOADING_SUCCESS,
@@ -26,7 +26,7 @@ import {
   SEARCH_SUCCESS,
   SEARCH_FAILURE,
   SEARCH_REQUEST,
-} from "../types";
+} from '../types';
 
 // All Posts load
 
@@ -37,7 +37,7 @@ const loadPostAPI = (payload) => {
 function* loadPosts(action) {
   try {
     const result = yield call(loadPostAPI, action.payload);
-    console.log(result, "loadPosts");
+    console.log(result, 'loadPosts');
     yield put({
       type: POSTS_LOADING_SUCCESS,
       payload: result.data,
@@ -47,6 +47,7 @@ function* loadPosts(action) {
       type: POSTS_LOADING_FAILURE,
       payload: e,
     });
+    yield put(push('/'));
   }
 }
 
@@ -59,21 +60,21 @@ function* watchLoadPosts() {
 const uploadPostAPI = (payload) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   const token = payload.token;
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
-  return axios.post("/api/post", payload, config);
+  return axios.post('/api/post', payload, config);
 };
 
 function* uploadPosts(action) {
   try {
-    console.log(action, "uploadPost function");
+    console.log(action, 'uploadPost function');
     const result = yield call(uploadPostAPI, action.payload);
-    console.log(result, "uploadPostAPI, action.payload");
+    console.log(result, 'uploadPostAPI, action.payload');
     yield put({
       type: POST_UPLOADING_SUCCESS,
       payload: result.data,
@@ -84,7 +85,7 @@ function* uploadPosts(action) {
       type: POST_UPLOADING_FAILURE,
       payload: e,
     });
-    yield put(push("/"));
+    yield put(push('/'));
   }
 }
 
@@ -102,7 +103,7 @@ function* loadPostDetail(action) {
   try {
     console.log(action);
     const result = yield call(loadPostDetailAPI, action.payload);
-    console.log(result, "post_detail_saga_data");
+    console.log(result, 'post_detail_saga_data');
     yield put({
       type: POST_DETAIL_LOADING_SUCCESS,
       payload: result.data,
@@ -112,7 +113,7 @@ function* loadPostDetail(action) {
       type: POST_DETAIL_LOADING_FAILURE,
       payload: e,
     });
-    yield put(push("/"));
+    yield put(push('/'));
   }
 }
 
@@ -124,13 +125,13 @@ function* watchloadPostDetail() {
 const DeletePostAPI = (payload) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   const token = payload.token;
 
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
 
   return axios.delete(`/api/post/${payload.id}`, config);
@@ -143,7 +144,7 @@ function* DeletePost(action) {
       type: POST_DELETE_SUCCESS,
       payload: result.data,
     });
-    yield put(push("/"));
+    yield put(push('/'));
   } catch (e) {
     yield put({
       type: POST_DELETE_FAILURE,
@@ -160,13 +161,13 @@ function* watchDeletePost() {
 const PostEditLoadAPI = (payload) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   const token = payload.token;
 
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
 
   return axios.get(`/api/post/${payload.id}/edit`, config);
@@ -184,7 +185,7 @@ function* PostEditLoad(action) {
       type: POST_EDIT_LOADING_FAILURE,
       payload: e,
     });
-    yield put(push("/"));
+    yield put(push('/'));
   }
 }
 
@@ -196,13 +197,13 @@ function* watchPostEditLoad() {
 const PostEditUploadAPI = (payload) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   const token = payload.token;
 
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
 
   return axios.post(`/api/post/${payload.id}/edit`, payload, config);
@@ -230,7 +231,7 @@ function* watchPostEditUpload() {
 
 // Category Find
 const CategoryFindAPI = (payload) => {
-  return axios.get(`/api/post/category/${encodeURIComponent(payload)}`);
+  return axios.get(`/api/post/category/${encodeURIComponent(payload)}`); // 한글 등... 변환
 };
 
 function* CategoryFind(action) {
@@ -270,7 +271,7 @@ function* SearchResult(action) {
       type: SEARCH_FAILURE,
       payload: e,
     });
-    yield put(push("/"));
+    yield put(push('/'));
   }
 }
 

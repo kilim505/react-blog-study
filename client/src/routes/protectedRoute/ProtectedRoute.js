@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Route, Redirect } from 'react-router-dom';
 
 export const EditProtectedRoute = ({ component: Component, ...rest }) => {
   const { userId } = useSelector((state) => state.auth);
@@ -16,7 +16,7 @@ export const EditProtectedRoute = ({ component: Component, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: '/',
                 state: {
                   from: props.location,
                 },
@@ -42,7 +42,7 @@ export const ProfileProtectedRoute = ({ component: Component, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: '/',
                 state: {
                   from: props.location,
                 },

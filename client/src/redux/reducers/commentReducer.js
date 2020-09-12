@@ -5,11 +5,11 @@ import {
   COMMENT_UPLOADING_REQUEST,
   COMMENT_UPLOADING_SUCCESS,
   COMMENT_UPLOADING_FAILURE,
-} from "../types";
+} from '../types';
 
 const initialState = {
   comments: [],
-  creatorId: "",
+  creatorId: '',
   loading: false,
   isAuthenticated: false,
 };

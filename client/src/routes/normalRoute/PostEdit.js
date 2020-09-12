@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Form,
   FormGroup,
@@ -8,23 +8,23 @@ import {
   Button,
   Col,
   Progress,
-} from "reactstrap";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import { editorConfiguration } from "../../components/editor/EditorConfig";
-import Myinit from "../../components/editor/UploadAdapter";
-import { POST_EDIT_UPLOADING_REQUEST } from "../../redux/types";
+} from 'reactstrap';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import { editorConfiguration } from '../../components/editor/EditorConfig';
+import Myinit from '../../components/editor/UploadAdapter';
+import { POST_EDIT_UPLOADING_REQUEST } from '../../redux/types';
 
 const PostEdit = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const [form, setValues] = useState({ title: "", contents: "", fileUrl: "" });
+  const [form, setValues] = useState({ title: '', contents: '', fileUrl: '' });
   const { postDetail } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const onSubmit = async (e) => {
     await e.preventDefault();
     const { title, contents, fileUrl } = form;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const id = postDetail._id;
     const body = { title, contents, fileUrl, token, id };
     console.log(body);
@@ -53,14 +53,14 @@ const PostEdit = () => {
     const data = editor.getData();
     console.log(data);
 
-    if (data && data.match("<img src=")) {
-      const whereImg_start = data.indexOf("<img src=");
+    if (data && data.match('<img src=')) {
+      const whereImg_start = data.indexOf('<img src=');
       console.log(whereImg_start);
-      let whereImg_end = "";
-      let ext_name_find = "";
-      let result_Img_Url = "";
+      let whereImg_end = '';
+      let ext_name_find = '';
+      let result_Img_Url = '';
 
-      const ext_name = ["jpeg", "png", "jpg", "gif"];
+      const ext_name = ['jpeg', 'png', 'jpg', 'gif'];
 
       for (let i = 0; i < ext_name.length; i++) {
         if (data.match(ext_name[i])) {
@@ -72,13 +72,13 @@ const PostEdit = () => {
       console.log(ext_name_find);
       console.log(whereImg_end);
 
-      if (ext_name_find === "jpeg") {
+      if (ext_name_find === 'jpeg') {
         result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 4);
       } else {
         result_Img_Url = data.substring(whereImg_start + 10, whereImg_end + 3);
       }
 
-      console.log(result_Img_Url, "result_Img_Url");
+      console.log(result_Img_Url, 'result_Img_Url');
       setValues({
         ...form,
         fileUrl: result_Img_Url,
