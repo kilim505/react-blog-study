@@ -47,7 +47,7 @@ function* loadPosts(action) {
       type: POSTS_LOADING_FAILURE,
       payload: e,
     });
-    // yield put(push('/'));
+    yield put(push('/'));
   }
 }
 

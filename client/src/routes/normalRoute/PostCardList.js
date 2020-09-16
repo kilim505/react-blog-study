@@ -9,7 +9,7 @@ import Category from '../../components/post/Category';
 
 const PostCardList = () => {
   const { posts, categoryFindResult, loading, postCount } = useSelector(
-    (state) => state.post,
+    (state) => state.post
   );
   const dispatch = useDispatch();
 
@@ -79,6 +79,6 @@ const PostCardList = () => {
       )}
     </Fragment>
   );
-}; // const PostCardList = () => {
+}; // end of const PostCardList = () => {
 
 export default PostCardList;

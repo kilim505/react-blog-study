@@ -1,0 +1,4 @@
+{
+  "vervose": true,
+  "ignore": ["client/"]
+}

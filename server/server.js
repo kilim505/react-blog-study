@@ -1,3 +1,4 @@
+//
 import app from './app';
 import config from './config/index';
 
@@ -20,15 +21,5 @@ greenlock
 */
 
 app.listen(PORT, () => {
-  console.log(`Server started on Port ${PORT}`);
+  console.log(`Blog Server started on Port ${PORT}`);
 });
-
-/*
-import config from "./config/index";
-
-const { PORT } = config;
-
-app.listen(PORT, () => {
-  console.log(`Server started on Port ${PORT}`);
-});
-*/

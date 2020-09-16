@@ -7,15 +7,15 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
   LOGOUT_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
   CLEAR_ERROR_REQUEST,
   CLEAR_ERROR_FAILURE,
   CLEAR_ERROR_SUCCESS,
   USER_LOADING_SUCCESS,
   USER_LOADING_FAILURE,
   USER_LOADING_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  REGISTER_REQUEST,
   PASSWORD_EDIT_UPLOADING_SUCCESS,
   PASSWORD_EDIT_UPLOADING_REQUEST,
   PASSWORD_EDIT_UPLOADING_FAILURE,
@@ -70,46 +70,11 @@ function* watchlogout() {
   yield takeEvery(LOGOUT_REQUEST, logout);
 }
 
-// User Loading - 로그인 상태에서 재로딩 경우 - 토큰으로만 인증
-const userLoadingAPI = (token) => {
-  console.log(token);
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  if (token) {
-    config.headers['x-auth-token'] = token;
-  }
-  return axios.get('api/auth/user', config);
-};
-
-function* userLoading(action) {
-  try {
-    console.log(action, 'userLoading');
-    const result = yield call(userLoadingAPI, action.payload);
-    yield put({
-      type: USER_LOADING_SUCCESS,
-      payload: result.data,
-    });
-  } catch (e) {
-    yield put({
-      type: USER_LOADING_FAILURE,
-      payload: e.response,
-    });
-  }
-}
-
-function* watchuserLoading() {
-  yield takeEvery(USER_LOADING_REQUEST, userLoading);
-}
-
 // Register - 로그인과 유사
 
 const registerUserAPI = (req) => {
-  console.log(req, 'req');
-  // 토큰이 필요 없음
+  console.log(req, 'req'); // 토큰이 필요 없음
+
   return axios.post('api/user', req);
 };
 
@@ -151,7 +116,42 @@ function* clearError() {
 function* watchclearError() {
   yield takeEvery(CLEAR_ERROR_REQUEST, clearError);
 }
-//
+
+// User Loading - 로그인 상태에서 재로딩 경우 - 토큰으로만 인증
+const userLoadingAPI = (token) => {
+  console.log(token);
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  if (token) {
+    config.headers['x-auth-token'] = token;
+  }
+  return axios.get('api/auth/user', config);
+};
+
+function* userLoading(action) {
+  try {
+    console.log(action, 'userLoading');
+    const result = yield call(userLoadingAPI, action.payload);
+    yield put({
+      type: USER_LOADING_SUCCESS,
+      payload: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: USER_LOADING_FAILURE,
+      payload: e.response,
+    });
+  }
+}
+
+function* watchuserLoading() {
+  yield takeEvery(USER_LOADING_REQUEST, userLoading);
+}
+
 // Edit Password
 
 const EditPasswordAPI = (payload) => {
